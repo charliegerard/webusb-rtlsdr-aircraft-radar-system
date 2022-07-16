@@ -1,7 +1,9 @@
 let device;
-
+import { Demodulator } from "./demodulator.js";
 let button = document.querySelector("button");
 let decoder;
+
+const demodulator = new Demodulator()
 
 button.onclick = () => {
   navigator.usb
@@ -41,18 +43,37 @@ button.onclick = () => {
     });
 };
 
+const onMsg = (msg) => {
+  if(msg.callsign){
+    console.log('AIRCRAFT: ', msg.callsign)
+    console.log('MESSAGE: ', msg)
+  }
+}
+
+let started = false;
+
 const readLoop = () => {
-  console.log("here");
   device
     // .transferIn(1, 112)
-    .transferIn(1, 128)
+    // .transferIn(1, 128)
+    // .transferIn(1, 64)
+    // .transferIn(1, 262144) // should use this one
+    .transferIn(1, 256000) // should use this one
+    // .transferIn(1, 200000) // should use this one
     .then((result) => {
-      console.log("hellooo", result.data);
+      if (!started) {
+        console.log('START')
+        started = true
+      }
+
       const test = new Uint8Array(result.data.buffer);
-      console.log("test", test);
-      decoder = new TextDecoder();
-      console.log("Received: " + decoder.decode(result.data));
+      // demodulator.process(result.data.buffer, 256000, onMsg)
+      demodulator.process(test, 256000, onMsg)
+      // decoder = new TextDecoder();
+      // console.log("Received: " + decoder.decode(result.data));
       readLoop();
     })
     .catch((ee) => console.log(ee));
 };
+
+

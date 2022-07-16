@@ -1,6 +1,6 @@
 import { Demodulator } from "./demodulator.js";
-function change_region(v) {}
-function change_type(v) {}
+function change_region(v) { }
+function change_type(v) { }
 
 // const sample_rate = 2400000; // radio
 const sample_rate = 2000000; // planes
@@ -92,6 +92,7 @@ function connect(button) {
     .then(() => {
       button.innerHTML = "Disconnect";
       console.log("IN CONNECT");
+      console.log(gettingData)
       if (!gettingData) {
         getData();
       }
@@ -152,12 +153,13 @@ navigator.usb
   .catch(handle_error);
 
 const getData = () => {
-  gettingData = true;
+  // gettingData = true;
   // read_samples(32768).then(
-  read_samples(33282).then(
-    // read_samples(112).then(
+  // read_samples(33282).then(
+  read_samples(112).then(
     (buf) => {
       let tmp = new Uint8Array(buf);
+      console.log(tmp)
       processData(tmp);
       // getData();
     },
