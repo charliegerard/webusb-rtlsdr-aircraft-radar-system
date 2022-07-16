@@ -1,6 +1,5 @@
 "use strict";
 
-// const msgLen = require("mode-s-msglen");
 import { msgLen, LONG_MSG_BITS as long_msg_bits } from "./mode-s-msglen.js";
 
 const LONG_MSG_BYTES = long_msg_bits / 8;

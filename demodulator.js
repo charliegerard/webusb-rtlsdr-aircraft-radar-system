@@ -1,15 +1,11 @@
 "use strict";
-
-// const msgLen = require("mode-s-msglen");
-// const Decoder = require("mode-s-decoder");
-
-import { Decoder, UNIT_FEET, UNIT_METERS } from "./test/decoder.js";
+import { Decoder, UNIT_FEET, UNIT_METERS } from "./decoder.js";
 
 import {
     msgLen,
     LONG_MSG_BITS as long_msg_bits,
     SHORT_MSG_BITS as short_msg_bits,
-} from "./test/mode-s-msglen.js";
+} from "./mode-s-msglen.js";
 
 const PREAMBLE_US = 8; // microseconds
 const FULL_LEN = PREAMBLE_US + long_msg_bits;
