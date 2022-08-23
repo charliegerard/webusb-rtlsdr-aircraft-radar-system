@@ -49,6 +49,7 @@ p {
     font-size: 1.5em;
     overflow-y: scroll;
     height: 90vh;
+    padding: 1em;
 }
 
 

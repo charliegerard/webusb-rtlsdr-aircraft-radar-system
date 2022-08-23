@@ -43,7 +43,6 @@ button.onclick = () => {
 };
 
 const onMsg = (msg) => {
-
     if (!msgReceived) {
         waitingMessage.style.display = "none";
         msgReceived = true;
@@ -82,81 +81,42 @@ const readLoop = () => {
 };
 
 
-/*
-
-{
-  aircraftType: null
-altitude: null
-ca: 5
-callsign: ""
-crc: 16033899
-crcOk: true
-dr: 20
-errorbit: -1
-ewDir: null
-ewVelocity: null
-fflag: null
-fs: 5
-heading: null
-headingIsValid: null
-icao: 10939975
-identity: 3426
-mesub: 4
-metype: 30
-msg: Uint8Array(56) [232, 199, 240, 176, 92, 94, 144, 102, 200, 63, 215, 244, 194, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, buffer: ArrayBuffer(56), byteLength: 56, byteOffset: 0, length: 56, Symbol(Symbol.toStringTag): 'Uint8Array']
-msgbits: 56
-msgtype: 11
-nsDir: null
-nsVelocity: null
-phaseCorrected: false
-rawLatitude: null
-rawLongitude: null
-speed: null
-tflag: null
-um: 55
-unit: null
-vertRate: null
-vertRateSign: null
-vertRateSource: null
-}
-*/
-
 let msgString = '';
 
 const displayAircraftData = msg => {
     // let message = {
-    //     aircraftType: null,
-    //     altitude: null,
-    //     ca: 5,
-    //     callsign: "",
-    //     crc: 16033899,
-    //     crcOk: true,
-    //     dr: 20,
-    //     errorbit: -1,
-    //     ewDir: null,
-    //     ewVelocity: null,
-    //     fflag: null,
-    //     fs: 5,
-    //     heading: null,
-    //     headingIsValid: null,
-    //     icao: 10939975,
-    //     identity: 3426,
-    //     mesub: 4,
-    //     metype: 30,
-    //     msgbits: 56,
-    //     msgtype: 11,
-    //     nsDir: null,
-    //     nsVelocity: null,
-    //     phaseCorrected: false,
-    //     rawLatitude: null,
-    //     rawLongitude: null,
-    //     speed: null,
-    //     tflag: null,
-    //     um: 55,
-    //     unit: null,
-    //     vertRate: null,
-    //     vertRateSign: null,
-    //     vertRateSource: null,
+    //     "msgbits": 112,
+    //     "msgtype": 17,
+    //     "crcOk": true,
+    //     "crc": 5939971,
+    //     "errorbit": 81,
+    //     "icao": 10652204,
+    //     "phaseCorrected": false,
+    //     "ca": 5,
+    //     "metype": 11,
+    //     "mesub": 0,
+    //     "headingIsValid": null,
+    //     "heading": null,
+    //     "aircraftType": null,
+    //     "fflag": 4,
+    //     "tflag": 0,
+    //     "rawLatitude": 102104,
+    //     "rawLongitude": 975213,
+    //     "callsign": "",
+    //     "ewDir": null,
+    //     "ewVelocity": null,
+    //     "nsDir": null,
+    //     "nsVelocity": null,
+    //     "vertRateSource": null,
+    //     "vertRateSign": null,
+    //     "vertRate": null,
+    //     "speed": null,
+    //     "fs": 5,
+    //     "dr": 20,
+    //     "um": 20,
+    //     "identity": 3302,
+    //     "altitude": 4850,
+    //     "unit": 0
     // }
 
     let message = msg;
