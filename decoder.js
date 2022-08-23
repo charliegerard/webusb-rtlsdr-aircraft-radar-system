@@ -46,8 +46,6 @@ const CHECKSUM_TABLE = new Uint32Array([
   0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000,
 ]);
 
-// module.exports = Decoder;
-
 export function Decoder(opts) {
   if (!(this instanceof Decoder)) return new Decoder(opts);
 

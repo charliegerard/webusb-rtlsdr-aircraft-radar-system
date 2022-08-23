@@ -59,7 +59,7 @@ Demodulator.prototype.computeMagnitudeVector = function (
 ) {
     // Compute the magnitude vector. It's just SQRT(I^2 + Q^2), but we rescale
     // to the 0-255 range to exploit the full resolution.
-    
+
     if (signedInt) {
         for (let j = 0; j < size; j += 2) {
             let i = data.readInt8(j);
@@ -145,8 +145,6 @@ Demodulator.prototype.detectMessage = function (mag, maglen, onMsg) {
             ) {
                 continue;
             }
-            // console.log('here')
-
 
             // The samples between the two spikes must be < than the average of the
             // high spikes level. We don't test bits too near to the high levels as
@@ -250,8 +248,7 @@ Demodulator.prototype.detectMessage = function (mag, maglen, onMsg) {
                 goodMessage = true;
                 if (useCorrection) mm.phaseCorrected = true;
             }
-            // console.log('icao??', mm.icao)
-            // console.log('identity??', mm.identity)
+
             // FIXME: If bad CRC, but checkCrc is false, will this logic then
             // not both call onMsg with the bad message AND try to
             // error-correct it, in which case we might end up calling onMsg
