@@ -4,6 +4,8 @@
 
 This project used the Web USB API, a RTL-SDR dongle + antenna and some vanilla JS code.
 
+If you'd like to learn more about how I built it, you can check out the blog post.
+
 ## How to run
 
 As it doesn't use any front-end framework, you can start it quickly by running: 
