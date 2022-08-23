@@ -1,0 +1,87 @@
+body {
+    background: rgb(34, 39, 63);
+    background: radial-gradient(circle, rgba(34, 39, 63, 1) 0%, rgba(3, 8, 23, 1) 100%);
+    font-family: 'Alumni Sans Pinstripe', sans-serif;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+svg {
+    position: absolute;
+    z-index: -1;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 700px 1fr;
+    grid-template-rows: 100px 1fr;
+    height: 100vh;
+}
+
+button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid white;
+    font-family: 'Alumni Sans Pinstripe', sans-serif;
+    border-radius: 3px;
+    color: white;
+    font-size: 1em;
+    padding: .5em 1em;
+    cursor: pointer;
+    z-index: 10;
+}
+
+main h1 {
+    grid-column: 2;
+    grid-row: 1;
+    color: rgb(117, 251, 253);
+    text-align: center;
+    font-size: 24px;
+}
+
+.left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.left .data:last-child,
+.right .data:last-child {
+    grid-column: 1 / span 3;
+}
+
+.right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.inner-left {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.data {
+    text-align: center;
+    font-size: 1.3em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.title {
+    background: rgba(255, 255, 255, 0.2);
+    padding: .5em 0;
+}
+
+.live-raw-data {
+    height: 10em;
+    overflow-y: hidden;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+
+footer {
+    position: absolute;
+    bottom: 1em;
+    text-align: center;
+    width: 100%;
+}
