@@ -4,7 +4,6 @@ let button = document.querySelector("button");
 let introSection = document.querySelector('.intro');
 let mainSection = document.querySelector('.app');
 let waitingMessage = document.querySelector('.blink-me');
-let previousPlaneDetectedIcao;
 let decoder;
 
 const demodulator = new Demodulator()
@@ -48,15 +47,7 @@ const onMsg = (msg) => {
         msgReceived = true;
     }
 
-    // if (previousPlaneDetectedIcao !== msg.icao) {
     displayAircraftData(msg);
-    // previousPlaneDetectedIcao = msg.icao;
-    // }
-    // if (msg.callsign) {
-    // console.log('AIRCRAFT: ', msg.callsign)
-    // }
-
-    // displayAircraftData(msg);
 }
 
 let started = false;
@@ -80,8 +71,8 @@ const readLoop = () => {
         .catch((ee) => console.log(ee));
 };
 
-
 let msgString = '';
+let msgsArray = [];
 
 const displayAircraftData = msg => {
     // let message = {
@@ -121,19 +112,36 @@ const displayAircraftData = msg => {
 
     let message = msg;
 
-    let keys = Object.keys(message);
-    keys = keys.filter(k => k !== 'msg');
+    msgsArray.push(JSON.stringify(message));
 
-
-    keys.map(k => {
-        msgString += `${k}: ${message[k]},`;
-    });
-
-    showText(".data", msgString, 0, 20);
-
+    handleData(msgsArray)
 }
 
+
+let msgIndex = 0;
+let previousIndex;
+
+const handleData = array => {
+    if (msgIndex !== previousIndex) {
+        let msg = JSON.parse(array[msgIndex]);
+
+        let keys = Object.keys(msg);
+        keys = keys.filter(k => k !== 'msg');
+
+        keys.map(k => {
+            msgString += `${k}: ${msg[k]},`;
+        });
+
+        showText(".data", msgString, 0, 20);
+
+        previousIndex = msgIndex;
+    }
+}
+
+let timer;
+
 var showText = function (target, message, index, interval) {
+
     if (index < message.length) {
         document.querySelector('.data').append(`${message[index++]}`);
 
@@ -143,6 +151,11 @@ var showText = function (target, message, index, interval) {
         }
         document.querySelector('.data').scrollTop = document.querySelector('.data').scrollHeight;
 
-        setTimeout(function () { showText(target, message, index, interval); }, interval);
+        timer = setTimeout(function () {
+            showText(target, message, index, interval);
+        }, interval);
+    } else {
+        clearTimeout(timer);
+        msgIndex++;
     }
 }
