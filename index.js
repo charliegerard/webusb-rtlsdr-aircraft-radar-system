@@ -6,7 +6,7 @@ let mainSection = document.querySelector('.app');
 let waitingMessage = document.querySelector('.blink-me');
 let decoder;
 
-const demodulator = new Demodulator()
+const demodulator = new Demodulator();
 
 button.onclick = () => {
     navigator.usb
@@ -15,11 +15,7 @@ button.onclick = () => {
                 {
                     vendorId: 0x0bda,
                     productId: 0x2838,
-                },
-                {
-                    vendorId: 0x0bda,
-                    productId: 0x2832,
-                },
+                }
             ],
         })
         .then((selectedDevice) => {
@@ -30,9 +26,8 @@ button.onclick = () => {
         .then(() => {
             introSection.style.display = "none";
             mainSection.style.display = "block";
-            // displayAircraftData();
             return device.claimInterface(0)
-        }) // Request exclusive control over interface #2.
+        })
         .then(() => {
             return readLoop();
         })
@@ -55,11 +50,11 @@ let msgReceived = false;
 
 const readLoop = () => {
     device
-        // .transferIn(1, 262144) // should use this one
-        .transferIn(1, 256000) // should use this one
+        .transferIn(1, 262144)
+        // .transferIn(1, 256000) 
         .then((result) => {
             if (!started) {
-                console.log('START')
+                console.log('starting...')
                 started = true
             }
 
