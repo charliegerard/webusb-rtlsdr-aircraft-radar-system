@@ -4,7 +4,7 @@
 
 This project uses the [Web USB API](https://developer.mozilla.org/en-US/docs/Web/API/USB), a [RTL-SDR dongle + antenna](https://www.rtl-sdr.com/buy-rtl-sdr-dvb-t-dongles/) and some vanilla JS code.
 
-If you'd like to learn more about how I built it, you can check out the [blog post](https://charliegerard.dev/blog/aircraft-radar-system-rtl-sdr-web-usb).
+If you'd like to learn more, you can check out the [blog post](https://charliegerard.dev/blog/aircraft-radar-system-rtl-sdr-web-usb).
 
 ## How to run
 
@@ -13,6 +13,8 @@ As it doesn't use any front-end framework, you can start it quickly by running:
 ```bash
 python -m http.server 8000
 ```
+
+and opening your browser on http://localhost:8000
 
 ## Credits
 
