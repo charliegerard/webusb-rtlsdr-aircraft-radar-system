@@ -16,4 +16,4 @@ python -m http.server 8000
 
 ## Credits
 
-This project probably wouldn't have been possible if I hadn't come across [AirplaneJS](https://github.com/watson/airplanejs) and [rtl-sdr](https://github.com/watson/rtl-sdr) by [Thomas Watson](https://github.com/watson) and [rtlsdrjs](https://github.com/sandeepmistry/rtlsdrjs) by [Sandeep Mistry](https://github.com/sandeepmistry). 
+This project probably wouldn't have been possible if I hadn't come across [AirplaneJS](https://github.com/watson/airplanejs) and [rtl-sdr](https://github.com/watson/rtl-sdr) by [Thomas Watson](https://github.com/watson) and [rtlsdrjs](https://github.com/sandeepmistry/rtlsdrjs) by [Sandeep Mistry](https://github.com/sandeepmistry). 💜
