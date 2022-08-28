@@ -1,117 +1,61 @@
-let device;
+let readSamples = true;
 import { Demodulator } from "./demodulator.js";
 let button = document.querySelector("button");
 let introSection = document.querySelector('.intro');
 let mainSection = document.querySelector('.app');
 let waitingMessage = document.querySelector('.blink-me');
-let decoder;
+let msgString = '';
+let msgsArray = [];
+let started = false;
+let msgReceived = false;
 
 const demodulator = new Demodulator();
 
-button.onclick = () => {
-    navigator.usb
-        .requestDevice({
-            filters: [
-                {
-                    vendorId: 0x0bda,
-                    productId: 0x2838,
-                }
-            ],
-        })
-        .then((selectedDevice) => {
-            device = selectedDevice;
-            return device.open(); // Begin a session.
-        })
-        .then(() => device.selectConfiguration(1)) // Select configuration #1 for the device.
-        .then(() => {
-            introSection.style.display = "none";
-            mainSection.style.display = "block";
-            return device.claimInterface(0)
-        })
-        .then(() => {
-            return readLoop();
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
+async function start() {
+    const sdr = await RtlSdr.requestDevice();
+    introSection.style.display = "none";
+    mainSection.style.display = "block";
+
+    await sdr.open({
+        ppm: 0.5
+    });
+
+    const actualSampleRate = await sdr.setSampleRate(2000000);
+    const actualCenterFrequency = await sdr.setCenterFrequency(1090000000);
+
+    await sdr.resetBuffer();
+
+    while (readSamples) {
+        if (!started) {
+            console.log('starting...')
+            started = true
+        }
+
+        // const samples = await sdr.readSamples(16 * 16384);
+        const samples = await sdr.readSamples(128000);
+        // console.log(samples)
+
+        const data = new Uint8Array(samples);
+        // console.log(data)
+
+        demodulator.process(data, 256000, onMsg)
+    }
+}
 
 const onMsg = (msg) => {
     if (!msgReceived) {
         waitingMessage.style.display = "none";
         msgReceived = true;
     }
-
     displayAircraftData(msg);
 }
 
-let started = false;
-let msgReceived = false;
-
-const readLoop = () => {
-    device
-        .transferIn(1, 262144)
-        // .transferIn(1, 256000) 
-        .then((result) => {
-            if (!started) {
-                console.log('starting...')
-                started = true
-            }
-
-            const data = new Uint8Array(result.data.buffer);
-            demodulator.process(data, 256000, onMsg)
-
-            readLoop();
-        })
-        .catch((ee) => console.log(ee));
-};
-
-let msgString = '';
-let msgsArray = [];
 
 const displayAircraftData = msg => {
-    // let message = {
-    //     "msgbits": 112,
-    //     "msgtype": 17,
-    //     "crcOk": true,
-    //     "crc": 5939971,
-    //     "errorbit": 81,
-    //     "icao": 10652204,
-    //     "phaseCorrected": false,
-    //     "ca": 5,
-    //     "metype": 11,
-    //     "mesub": 0,
-    //     "headingIsValid": null,
-    //     "heading": null,
-    //     "aircraftType": null,
-    //     "fflag": 4,
-    //     "tflag": 0,
-    //     "rawLatitude": 102104,
-    //     "rawLongitude": 975213,
-    //     "callsign": "",
-    //     "ewDir": null,
-    //     "ewVelocity": null,
-    //     "nsDir": null,
-    //     "nsVelocity": null,
-    //     "vertRateSource": null,
-    //     "vertRateSign": null,
-    //     "vertRate": null,
-    //     "speed": null,
-    //     "fs": 5,
-    //     "dr": 20,
-    //     "um": 20,
-    //     "identity": 3302,
-    //     "altitude": 4850,
-    //     "unit": 0
-    // }
-
     let message = msg;
-
     msgsArray.push(JSON.stringify(message));
-
-    handleData(msgsArray)
+    handleData(msgsArray);
 }
-
 
 let msgIndex = 0;
 let previousIndex;
@@ -154,3 +98,5 @@ var showText = function (target, message, index, interval) {
         msgIndex++;
     }
 }
+
+button.onclick = () => start();
